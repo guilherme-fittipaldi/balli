@@ -1,11 +1,12 @@
 import axios from "axios";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const API_KEY = process.env.OPENAI_API_KEY;
 const BASE_URL = "https://api.openai.com/v1/assistants";
 // const ASSISTANT_ID = process.env.ASSISTANT_ID; // ID do assistente configurado
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {  if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
@@ -31,6 +32,6 @@ export default async function handler(req, res) {
     // );
     res
       .status(500)
-      .json({ message: "Failed to run command", error: error?.response?.data });
+      .json({ message: "Failed to run command", error: error });
   }
 }

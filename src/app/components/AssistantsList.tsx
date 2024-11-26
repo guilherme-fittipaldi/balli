@@ -80,8 +80,8 @@ export const AssistantList: React.FC<AssistantListProps> = ({ message, step }) =
         {!loading && assistants.length > 0 ? (
           <div className="flex w-full flex-wrap mt-4 gap-4">
             {assistants
-              .filter((a) => !a.name.includes("Copy") && a.name !== "")
-              .map((assistant) => (
+              .filter((a: {name: string, id: string}) => !a.name.includes("Copy") && a.name !== "")
+              .map((assistant: {name: string, id: string}) => (
                 <Button
                   key={assistant.id}
                   disabled={loadingResponse}

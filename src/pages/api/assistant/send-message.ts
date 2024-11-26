@@ -1,5 +1,6 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {  if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
@@ -32,6 +33,6 @@ export default async function handler(req, res) {
     res.status(200).json(data);
   } catch (error) {
     console.error("Error sending message:", error);
-    res.status(500).json({ message: "Failed to send message", error: error.message });
+    res.status(500).json({ message: "Failed to send message", error: error });
   }
 }
