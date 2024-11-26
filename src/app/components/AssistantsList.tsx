@@ -8,10 +8,13 @@ import { Spinner } from "@/components/ui/spinner";
 
 interface AssistantListProps {
   message: string;
-  step: number
+  step: number;
 }
 
-export const AssistantList: React.FC<AssistantListProps> = ({ message, step }) => {
+export const AssistantList: React.FC<AssistantListProps> = ({
+  message,
+  step,
+}) => {
   const [assistants, setAssistants] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingResponse, setLoadingResponse] = useState(false);
@@ -80,8 +83,8 @@ export const AssistantList: React.FC<AssistantListProps> = ({ message, step }) =
         {!loading && assistants.length > 0 ? (
           <div className="flex w-full flex-wrap mt-4 gap-4">
             {assistants
-              .filter((a: {name: string, id: string}) => !a.name.includes("Copy") && a.name !== "")
-              .map((assistant: {name: string, id: string}) => (
+              .filter((a: { name: string; id: string }) => a.name !== "")
+              .map((assistant: { name: string; id: string }) => (
                 <Button
                   key={assistant.id}
                   disabled={loadingResponse}
