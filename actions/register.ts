@@ -30,6 +30,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       name,
       email,
       password: hashedPassword,
+      emailVerified: new Date()
     },
   });
 
@@ -39,5 +40,5 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     verificationToken.token,
   );
 
-  return { success: "Confirmation email sent!" };
+  return { success: "Você criou sua conta!" };
 };
