@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -142,6 +142,27 @@ export const MarketingForm: React.FC<MarketingFormProps> = ({
     setOnboarding(1);
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("formData")) {
+      const form = JSON.parse(localStorage.getItem("formData") ?? "");
+      setFormData(form);
+      setMessage(
+        ` Gere o texto com base nessas informações:
+          1. Quem você é? ${form.whoAreYou}; 
+          2. Qual mercado você está atuando? ${form.targetMarket}; 
+          3. Quais os benefícios o aluno vai ter? ${form.studentBenefits};
+          4. Quais resultados significativos você alcançou? ${form.significantResults};
+          5. Depoimentos e histórias de clientes que se beneficiaram do seu acompanhamento: ${form.testimonials};
+          6. Qual passo a pessoa deve seguir para alcançar a transformação que você promete? ${form.transformationSteps};
+          7. Em quanto tempo os participantes começam a ver resultado? ${form.timeToResults};
+  `
+      );
+      setStep(9);
+      setOnboarding(1);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Card className="w-full max-w-3xl mx-auto">
       <CardHeader>
@@ -193,138 +214,4 @@ export const MarketingForm: React.FC<MarketingFormProps> = ({
       </CardContent>
     </Card>
   );
-  // return (
-  //   <Card className="w-full max-w-3xl mx-auto">
-  //     <CardHeader>
-  //       <CardTitle>Onboarding</CardTitle>
-  //     </CardHeader>
-  //     <CardContent>
-  //       {step === 0 ? (
-  //         <form onSubmit={handleSubmit} className="space-y-4">
-  //           <div>
-  //             <Label htmlFor="name">Nome</Label>
-  //             <Input
-  //               id="name"
-  //               name="name"
-  //               value={formData.name}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="email">Email</Label>
-  //             <Input
-  //               id="email"
-  //               name="email"
-  //               type="email"
-  //               value={formData.email}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="phone">Telefone</Label>
-  //             <Input
-  //               id="phone"
-  //               name="phone"
-  //               type="tel"
-  //               value={formData.phone}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="whoAreYou">Quem é você?</Label>
-  //             <Textarea
-  //               id="whoAreYou"
-  //               name="whoAreYou"
-  //               value={formData.whoAreYou}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="targetMarket">
-  //               Qual mercado você está atuando?
-  //             </Label>
-  //             <Input
-  //               id="targetMarket"
-  //               name="targetMarket"
-  //               value={formData.targetMarket}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="studentBenefits">
-  //               Quais os benefícios o aluno vai ter?
-  //             </Label>
-  //             <Textarea
-  //               id="studentBenefits"
-  //               name="studentBenefits"
-  //               value={formData.studentBenefits}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="significantResults">
-  //               Quais resultados significativos você alcançou?
-  //             </Label>
-  //             <Textarea
-  //               id="significantResults"
-  //               name="significantResults"
-  //               value={formData.significantResults}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="testimonials">
-  //               Depoimentos e histórias de clientes que se beneficiaram do seu
-  //               acompanhamento
-  //             </Label>
-  //             <Textarea
-  //               id="testimonials"
-  //               name="testimonials"
-  //               value={formData.testimonials}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="transformationSteps">
-  //               Qual passo a pessoa deve seguir para alcançar a transformação
-  //               que você promete?
-  //             </Label>
-  //             <Textarea
-  //               id="transformationSteps"
-  //               name="transformationSteps"
-  //               value={formData.transformationSteps}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <div>
-  //             <Label htmlFor="timeToResults">
-  //               Em quanto tempo os participantes começam a ver resultado?
-  //             </Label>
-  //             <Input
-  //               id="timeToResults"
-  //               name="timeToResults"
-  //               value={formData.timeToResults}
-  //               onChange={handleInputChange}
-  //               required
-  //             />
-  //           </div>
-  //           <Button type="submit" className="w-full">
-  //             Enviar
-  //           </Button>
-  //         </form>
-  //       ) : (
-  //         "Concluído"
-  //       )}
-  //     </CardContent>
-  //   </Card>
-  // );
 };

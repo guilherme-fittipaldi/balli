@@ -1,8 +1,38 @@
 import { NextResponse } from "next/server";
+import path from "path";
+import fs from "fs";
+import FormData from "form-data";
 
 export async function POST(req: Request) {
-  const { assistantId, message } = await req.json();
+  const { assistantId, message, file } = await req.json();
 
+  const filePath = path.join(process.cwd(), "public", file + ".pdf");
+
+  // Leia o arquivo como um buffer
+  const fileBuffer = fs.readFileSync(filePath);
+
+  // Crie o FormData e anexe o arquivo
+  const formData = new FormData();
+  formData.append("file", fileBuffer, "ajuda.pdf");
+
+  const fileUploadResponse = await fetch("https://api.openai.com/v1/files", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      "OpenAI-Beta": "assistants=v2",
+    },
+    body: formData.getBuffer(),
+  });
+  
+  
+  if (!fileUploadResponse) {
+    console.error("Failed to upload file:", await fileUploadResponse);
+    throw new Error("Error uploading file");
+  }
+  
+  const uploadedFile = await fileUploadResponse.json();
+  console.log("File uploaded successfully:", uploadedFile);
+  
   // Validação do corpo da requisição
   if (!assistantId || !message) {
     return NextResponse.json(
@@ -28,7 +58,7 @@ export async function POST(req: Request) {
             messages: [
               {
                 role: "user",
-                content: message,
+                content: message + `; Não faça perguntas adicionais e conclua o planejamento de forma autônoma e completa; Use o arquivo como referência: ${uploadedFile.id}`,
               },
             ],
           },

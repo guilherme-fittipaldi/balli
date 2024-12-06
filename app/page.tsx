@@ -17,15 +17,15 @@ export default function Home() {
           "text-6xl font-semibold text-white drop-shadow-md",
           font.className,
         )}>
-          🔐 Auth
+          Balli App
         </h1>
-        <p className="text-white text-lg">
-          A simple authentication service
-        </p>
+        {/* <p className="text-white text-lg">
+          Intelig
+        </p> */}
         <div>
           <LoginButton  asChild>
             <Button variant="secondary" size="lg">
-              Sign in
+              Entre
             </Button>
           </LoginButton>
         </div>
