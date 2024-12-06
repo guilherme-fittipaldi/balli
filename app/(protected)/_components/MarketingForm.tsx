@@ -208,8 +208,28 @@ export const MarketingForm: React.FC<MarketingFormProps> = ({
               </Button>
             </div>
           </form>
-        ) : (
-          "Concluído"
+        ) : (<span className="flex flex-col gap-2">
+         <p>
+          Concluído
+          </p>
+          <div className="text-red-600 cursor-pointer" onClick={() =>{
+            localStorage.removeItem("formData");
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              whoAreYou: "",
+              targetMarket: "",
+              studentBenefits: "",
+              significantResults: "",
+              testimonials: "",
+              transformationSteps: "",
+              timeToResults: "",
+            });
+            setStep(0);
+            setOnboarding(0);
+          }}>Refazer onboarding</div> 
+        </span>
         )}
       </CardContent>
     </Card>

@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     headers: {
       Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       "OpenAI-Beta": "assistants=v2",
+      ...formData.getHeaders()
     },
     body: formData.getBuffer(),
   });
