@@ -1,39 +1,11 @@
 import { NextResponse } from "next/server";
-import path from "path";
-import fs from "fs";
-import FormData from "form-data";
+import { handleText } from "@/utils/handleText";
 
 export async function POST(req: Request) {
   const { assistantId, message, file } = await req.json();
 
-  const filePath = path.join(process.cwd(), "public", file + ".pdf");
+  const uploadedFile = handleText(file);
 
-  // Leia o arquivo como um buffer
-  const fileBuffer = fs.readFileSync(filePath);
-
-  // Crie o FormData e anexe o arquivo
-  const formData = new FormData();
-  formData.append("file", fileBuffer, "ajuda.pdf");
-
-  const fileUploadResponse = await fetch("https://api.openai.com/v1/files", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      "OpenAI-Beta": "assistants=v2",
-      ...formData.getHeaders()
-    },
-    body: formData.getBuffer(),
-  });
-  
-  
-  if (!fileUploadResponse) {
-    console.error("Failed to upload file:", await fileUploadResponse);
-    throw new Error("Error uploading file");
-  }
-  
-  const uploadedFile = await fileUploadResponse.json();
-  console.log("File uploaded successfully:", uploadedFile);
-  
   // Validação do corpo da requisição
   if (!assistantId || !message) {
     return NextResponse.json(
@@ -59,7 +31,9 @@ export async function POST(req: Request) {
             messages: [
               {
                 role: "user",
-                content: message + `; Não faça perguntas adicionais e conclua o planejamento de forma autônoma e completa; Use o arquivo como referência: ${uploadedFile.id}`,
+                content:
+                  message +
+                  `; Não faça perguntas adicionais e conclua o planejamento de forma autônoma e completa; Responda seguindo o seguinte padrão como referência: ${uploadedFile}`,
               },
             ],
           },
@@ -104,9 +78,12 @@ export async function POST(req: Request) {
 
       threadRunStatus = await statusResponse.json();
 
-      console.log(threadRunStatus.status, "opa")
+      console.log(threadRunStatus.status, "opa");
 
-      if (threadRunStatus.status === "completed" || threadRunStatus.status === "failed") {
+      if (
+        threadRunStatus.status === "completed" ||
+        threadRunStatus.status === "failed"
+      ) {
         isComplete = true;
       } else {
         // Aguarda 1 segundo antes de verificar novamente

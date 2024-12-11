@@ -147,7 +147,7 @@ export const MarketingForm: React.FC<MarketingFormProps> = ({
       const form = JSON.parse(localStorage.getItem("formData") ?? "");
       setFormData(form);
       setMessage(
-        ` Gere o texto com base nessas informações:
+        `Baseado nessas informações:
           1. Quem você é? ${form.whoAreYou}; 
           2. Qual mercado você está atuando? ${form.targetMarket}; 
           3. Quais os benefícios o aluno vai ter? ${form.studentBenefits};
