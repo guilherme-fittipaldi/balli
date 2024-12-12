@@ -14,6 +14,13 @@ export const formatAssistants = (arr: any[]) => {
           "Com base nas informações anteriores do chat, seguindo as instruções que você foi treinado, gere o mecanismo do meu produto. Utilize como exemplo a estrutura do documento enviado juntamente com o texto, replicando a lógica de organização, as seções e a abordagem metodológica. Certifique-se de seguir à risca essa estrutura, aplicando-a ao contexto do novo produto em desenvolvimento. Para informações que não forem obtidas diretamente dos dados fornecidos, utilize sua criatividade para preenchê-las, sempre garantindo coerência com o propósito do produto. Não faça perguntas adicionais e conclua o planejamento de forma autônoma e completa.",
       };
     }
+    if (obj.name === "3. Concepção do Posicionamento") {
+      return {
+        ...obj,
+        prompt:
+          "Posicionamento: Com base nas informações anteriores do chat, seguindo as instruções que você foi treinado, gere a concepção do posicionamento do meu produto. Utilize como exemplo a estrutura do documento enviado juntamente com o texto, replicando a lógica de organização, as seções e a abordagem metodológica. Certifique-se de seguir à risca essa estrutura, aplicando-a ao contexto do novo produto em desenvolvimento. Para informações que não forem obtidas diretamente dos dados fornecidos, utilize sua criatividade para preenchê-las, sempre garantindo coerência com o propósito do produto. Não faça perguntas adicionais e conclua o planejamento de forma autônoma e completa. O destaque de quem sou você poderia elaborar melhor a história contando de forma mais profunda, detalhando cada fase da história e usar muito mais histórias para contar tudo de forma completa, não tenha medo de criar um roteiro grande, quanto mais melhor",
+      };
+    }
     if (obj.name === "4. Estratégia Macro") {
       return {
         ...obj,
