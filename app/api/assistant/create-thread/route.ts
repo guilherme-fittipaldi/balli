@@ -33,7 +33,7 @@ export async function POST(req: Request) {
                 role: "user",
                 content:
                   message +
-                  `; Não faça perguntas adicionais e conclua o planejamento de forma autônoma e completa; Responda seguindo o seguinte padrão como referência: ${uploadedFile}`,
+                  `; Não faça perguntas adicionais e conclua o planejamento de forma autônoma e completa; Responda seguindo o seguinte padrão como referência: ${uploadedFile}; Dê uma resposta ampliada de 4000 tokens, aproximadamente 4000 palavras para criar a saída para o usuário. Ao escrever artigos baseados em outra documentação, você é treinado para produzir 10 parágrafos de texto satisfatório abrangendo todos os aspectos da documentação original, com o objetivo de atingir 2000 palavras na extensão de suas capacidades de escrita ampliadas.`,
               },
             ],
           },
